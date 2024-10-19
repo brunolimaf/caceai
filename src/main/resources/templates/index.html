@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Página de Pesquisa</title>
+    <title>CaceAi</title>
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -24,10 +24,9 @@
             z-index: 1000;
             text-align: center;
             padding: 80px 0 50px 0;
-
         }
         .header .container {
-            width: 80%;
+            width: 90%;
             max-width: 800px;
             margin: 0 auto;
         }
@@ -108,7 +107,6 @@
             position: fixed;
             color: #888;
             bottom: 0;
-            margin: 0 auto;
             width: 100%;
             padding: 15px 0;
         }
@@ -122,41 +120,28 @@
         .resultPesquisa {
             color: #555;
         }
-        .paragrafoResposta{
-            font-size:18px;
-            line-height:1.3em;
+        .paragrafoResposta {
+            font-size: 18px;
+            line-height: 1.3em;
             color: #333;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/typeit@8.0.7/dist/typeit.min.js"></script>
 </head>
 <body>
 <div class="header">
     <div class="container">
         <img src="/path/to/logo.png" alt="Logo" class="logo">
         <h1>Pesquisa inteligente.</h1>
-        <form action="/" method="post">
-            <div>
-                <input type="text" id="consulta" name="consulta" placeholder="Digite sua pesquisa" required>
-            </div>
+        <form id="consulta-form">
+            <input type="text" name="consulta" id="consulta" placeholder="Digite sua consulta" required>
+
         </form>
     </div>
 </div>
 
-<div th:each="resposta : ${respostas}" class="resposta-container">
-    <div class="top-header">
-        <span class="resultPesquisa">Resultado:</span>
-        <div class="social-icons">
-            <a href="#" onclick="compartilhar('whatsapp', event)"><i class="fab fa-whatsapp"></i></a>
-            <a href="#" onclick="compartilhar('instagram', event)"><i class="fab fa-instagram"></i></a>
-            <a href="#" onclick="compartilhar('facebook', event)"><i class="fab fa-facebook"></i></a>
-            <a href="#" onclick="compartilhar('x', event)"><i class="fab fa-x"></i></a>
-            <button class="botao-pdf" onclick="gerarPDF(event)">Gerar PDF</button>
-        </div>
-    </div>
-    <p th:text="${resposta}" class="paragrafoResposta">
-        Resultado da pesquisa: como estudar java? Slashan de agrimeco: testa más de throwões. Botles estamos sinisten con su10fre exonerado. Meteorita de pelucido a calidad observarión con la speedada. Tapas twixtos que también institutionales informatio framir ustedó en sectores. Señor tumultuous atre tiempo que los programes peiques tomatos Re subincentados donde cas
-    </p>
-</div>
+<!-- Container para exibir as respostas -->
+<div id="respostas-container"></div>
 
 <div class="footer">
     <p>Desenvolvido por: <a href="https://www.publiky.com" target="_blank">publiky.com</a></p>
@@ -164,41 +149,86 @@
 
 <script>
     // Função para gerar PDF com jsPDF
-function gerarPDF(event) {
-    const resultado = event.target.closest('.resposta-container').querySelector('p').textContent;
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+    function gerarPDF(event) {
+        const resultado = event.target.closest('.resposta-container').querySelector('.paragrafoResposta').textContent;
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
 
-    // Definições de margens
-    const margin = 20; // Margem em milímetros
-    const pageHeight = doc.internal.pageSize.height;
-    const pageWidth = doc.internal.pageSize.width;
+        const margin = 20;
+        const pageHeight = doc.internal.pageSize.height;
+        const pageWidth = doc.internal.pageSize.width;
 
-    // Cabeçalho
-    doc.setFontSize(16);
-    doc.setFont("helvetica", "normal"); // Define a fonte moderna
-    doc.text('Resultado da Pesquisa', margin, margin);
+        doc.setFontSize(16);
+        doc.setFont("helvetica", "normal");
+        doc.text('Resultado da Pesquisa', margin, margin);
 
-    // Linha abaixo do título
-    doc.setLineWidth(0.5);
-    doc.line(margin, margin + 5, pageWidth - margin, margin + 5); // Desenha uma linha horizontal
+        doc.setLineWidth(0.5);
+        doc.line(margin, margin + 5, pageWidth - margin, margin + 5);
 
-    // Adiciona um espaço antes do resultado
-    doc.setFontSize(12);
-    doc.text(' ', margin, margin + 10);
+        doc.setFontSize(12);
+        doc.text(resultado, margin, margin + 20, { maxWidth: pageWidth - 2 * margin });
 
-    // Resultado da pesquisa
-    doc.text(resultado, margin, margin + 20, { maxWidth: pageWidth - 2 * margin }); // Limita a largura do texto
+        const footer = 'www.caceai.com';
+        doc.text(footer, margin, pageHeight - margin);
 
-    // Rodapé
-    const footer = 'www.caceai.com';
-    doc.text(footer, margin, pageHeight - margin); // Rodapé com a margem
+        doc.save('resultado_pesquisa.pdf');
+    }
 
-    // Salva o PDF
-    doc.save('resultado_pesquisa.pdf');
-}
+    // Função para exibir a resposta na tela
+    function exibirResposta(resposta) {
+        const novaResposta = document.createElement("div");
+        novaResposta.classList.add("resposta-container");
+        novaResposta.innerHTML = `
+            <div class="top-header">
+                <span class="resultPesquisa">Resultado:</span>
+                <div class="social-icons">
+                    <a href="#" onclick="compartilhar('whatsapp', event)"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" onclick="compartilhar('instagram', event)"><i class="fab fa-instagram"></i></a>
+                    <a href="#" onclick="compartilhar('facebook', event)"><i class="fab fa-facebook"></i></a>
+                    <a href="#" onclick="compartilhar('x', event)"><i class="fab fa-x"></i></a>
+                    <button class="botao-pdf" onclick="gerarPDF(event)">Gerar PDF</button>
+                </div>
+            </div>
+            <p class="paragrafoResposta">${resposta}</p>
+        `;
 
+        document.getElementById("respostas-container").prepend(novaResposta);
+    }
+
+    // Manipulação do envio do formulário
+    document.getElementById("consulta-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const consulta = document.getElementById("consulta").value;
+
+        fetch("/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-Requested-With": "XMLHttpRequest"
+            },
+            body: new URLSearchParams({ consulta })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Erro ao processar a solicitação");
+            return response.text();
+        })
+        .then(data => {
+            if (data && data.trim()) {
+                exibirResposta(data);
+            } else {
+                exibirResposta("Nenhuma resposta encontrada para a pesquisa.");
+            }
+        })
+        .catch(error => {
+            console.error("Erro:", error);
+            exibirResposta("Ocorreu um erro ao processar a sua solicitação.");
+        });
+
+
+    });
 </script>
+
+
 
 </body>
 </html>
