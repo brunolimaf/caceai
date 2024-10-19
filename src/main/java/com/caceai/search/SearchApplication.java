@@ -12,3 +12,6 @@ public class SearchApplication {
 	}
 
 }
+
+
+//javac -d bin src/main/java/com/caceai/search/SearchApplication.java
