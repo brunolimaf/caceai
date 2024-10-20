@@ -6,13 +6,15 @@
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
     <style>
         /* Estilização do corpo da página */
         body {
             font-family: Arial, sans-serif;
             background-color: #fff;
             margin: 0;
-            padding-top: 290px; /* Espaço para o header fixo */
+            padding-top: 380px; /* Espaço para o header fixo */
         }
         /* Header fixo */
         .header {
@@ -23,7 +25,7 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
             z-index: 1000;
             text-align: center;
-            padding: 80px 0 50px 0;
+            padding: 60px 0 60px 0;
         }
         .header .container {
             width: 90%;
@@ -46,7 +48,7 @@
             margin-top: 20px;
         }
         input[type="text"] {
-            width: 70%;
+            width: 100%; /* Ajuste para 100% para responsividade */
             padding: 18px;
             border-radius: 25px;
             border: 1px solid #ccc;
@@ -55,10 +57,23 @@
             font-weight: 500;
             color: #888;
             font-size: 17px;
+            white-space: pre-wrap; /* Permite quebras de linha */
+            word-wrap: break-word; /* Quebra palavras longas */
         }
         input[type="text"]:focus {
             border-color: #007bff;
         }
+
+        /* Estilizando o ícone */
+        .search-icon {
+            position: absolute; /* Posição absoluta para o ícone */
+            left: 15px; /* Distância da esquerda */
+            top: 50%; /* Centralizando verticalmente */
+            transform: translateY(-50%); /* Ajustando a posição vertical do ícone */
+            color: #888; /* Cor do ícone */
+            font-size: 18px; /* Tamanho do ícone */
+        }
+
         /* Estilização das respostas */
         .resposta-container {
             background-color: #fff;
@@ -125,17 +140,33 @@
             line-height: 1.3em;
             color: #333;
         }
+
+        /* Estilos Responsivos */
+        @media (max-width: 600px) {
+            .header .container {
+                padding: 0 10px; /* Espaçamento lateral em telas pequenas */
+            }
+            h1 {
+                font-size: 12px; /* Ajustar tamanho da fonte em telas pequenas */
+            }
+            input[type="text"] {
+                font-size: 15px; /* Ajustar tamanho da fonte do input em telas pequenas */
+                padding: 15px; /* Ajustar padding do input em telas pequenas */
+            }
+            .resposta-container {
+                width: 95%; /* Ajustar largura das respostas em telas pequenas */
+            }
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/typeit@8.0.7/dist/typeit.min.js"></script>
 </head>
 <body>
 <div class="header">
     <div class="container">
-        <img src="/path/to/logo.png" alt="Logo" class="logo">
+        <img th:src="@{/images/logo-caceai.jpg}" alt="Logo" class="logo">
         <h1>Pesquisa inteligente.</h1>
         <form id="consulta-form">
             <input type="text" name="consulta" id="consulta" placeholder="Digite sua consulta" required>
-
         </form>
     </div>
 </div>
@@ -221,12 +252,35 @@
         })
         .catch(error => {
             console.error("Erro:", error);
-            exibirResposta("Ocorreu um erro ao processar a sua solicitação.");
+            exibirResposta("Ocorreu um erro ao processar a solicitação.");
         });
-
-
     });
-</script>
 
+    function compartilhar(plataforma, event) {
+        event.preventDefault();
+        const mensagem = "Confira essa pesquisa no CaceAi!";
+        const url = window.location.href;
+        let shareUrl = '';
+
+        switch (plataforma) {
+            case 'whatsapp':
+                shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(mensagem + ' ' + url)}`;
+                break;
+            case 'instagram':
+                shareUrl = `https://www.instagram.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                break;
+            case 'facebook':
+                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                break;
+            case 'x':
+                shareUrl = `https://twitter.com/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(mensagem)}`;
+                break;
+            default:
+                return;
+        }
+
+        window.open(shareUrl, '_blank');
+    }
+</script>
 </body>
 </html>
