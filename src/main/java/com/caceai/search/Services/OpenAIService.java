@@ -1,5 +1,6 @@
 package com.caceai.search.Services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -7,20 +8,27 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class OpenAIService {
 
+    private final String apiKey; // Chave da API
+
     private final String API_URL = "https://api.openai.com/v1/chat/completions"; // URL da API do ChatGPT
 
-    @Value("${OPENAI_API_KEY}")
-    private String API_KEY; // Chave da API
+    public OpenAIService(@Value("${openai.api.key}") String apiKey) {
+        this.apiKey = apiKey;
+    }
 
     public String obterResposta(String consulta) {
         RestTemplate restTemplate = new RestTemplate();
 
         // Configura o cabeçalho com a chave da API
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + API_KEY);
+        headers.set("Authorization", "Bearer " + apiKey); // Utiliza a chave da API correta
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         // Cria o corpo da requisição com a consulta
@@ -35,10 +43,23 @@ public class OpenAIService {
     }
 
     private String createRequestBody(String consulta) {
-        return "{"
-                + "\"model\": \"gpt-3.5-turbo\"," // Modelo que você quer usar
-                + "\"messages\":[{\"role\":\"user\",\"content\":\"" + consulta + "\"}]"
-                + "}";
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            Map<String, Object> requestMap = new HashMap<>();
+            requestMap.put("model", "gpt-3.5-turbo");
+
+            // Criação do conteúdo da mensagem
+            Map<String, String> message = new HashMap<>();
+            message.put("role", "user");  // Define o papel como "user"
+            message.put("content", consulta);  // Define a consulta como conteúdo
+
+            // Adiciona a mensagem no array de mensagens
+            requestMap.put("messages", Collections.singletonList(message));
+
+            return objectMapper.writeValueAsString(requestMap);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Erro ao criar o corpo da requisição", e);
+        }
     }
 
     private String processResponse(ResponseEntity<String> response) {

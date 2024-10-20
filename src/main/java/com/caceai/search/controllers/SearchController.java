@@ -19,9 +19,12 @@ public class SearchController {
 
     private final List<String> respostas = new LinkedList<>();
 
+    private final OpenAIService openAIService;
 
-    @Autowired
-    private OpenAIService openAIService;
+    // Injeção de dependência via construtor
+    public SearchController(OpenAIService openAIService) {
+        this.openAIService = openAIService;
+    }
 
     @GetMapping("/")
     public String index(Model model) {
