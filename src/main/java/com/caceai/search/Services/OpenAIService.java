@@ -12,7 +12,7 @@ public class OpenAIService {
 
     private final String API_URL = "https://api.openai.com/v1/chat/completions"; // URL da API do ChatGPT
 
-    @Value("${openai.api.key}")
+    @Value("${OPENAI_API_KEY}")
     private String API_KEY; // Chave da API
 
     public String obterResposta(String consulta) {
