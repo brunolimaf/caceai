@@ -5,25 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CaceAi</title>
     <link rel="stylesheet" href="/css/styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
     <style>
+        /* Estilização do corpo da página */
         body {
-            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: #fff;
             flex-direction: column;
-            height: 100vh;
             margin: 0;
-            padding-top: 700px; /* Espaço para o header fixo */
-        }
-        h1 {
-            font-size: 15px;
-            color: #888;
-            margin: 20px 0 25 0;
-            font-weight: 400;
+            padding-top: 350px; /* Espaço para o header fixo */
         }
         /* Header fixo */
         .header {
@@ -34,13 +29,14 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
             z-index: 1000;
             text-align: center;
-            padding: 40px 0 40px 0;
+            padding: 40px 0 20px 0;
         }
         .header .container {
-            width: 89%;
-            max-width: 700px;
+            width: 90%;
+            max-width: 800px;
             margin: 0 auto;
         }
+
         .search-container {
             text-align: center;
             width: 100%;
@@ -53,62 +49,80 @@
         }
         .search-container img {
             width: 150px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
-        .form-control {
-            border-radius: 50px;
-            padding: 10px 20px;
-            font-size: 18px;
+
+        .logo {
+            max-width: 150px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 15px;
+            color: #888;
+            margin: 20px 0 25 0;
+            font-weight: 400;
+        }
+        form {
+            margin-top: 20px;
         }
         .btn-search {
             border-radius: 50px;
             padding: 10px 20px;
         }
-        .response-container {
-            width: 100%;
-            max-width: 800px;
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+
+        /* Estilizando o ícone */
+        .search-icon {
+            position: absolute; /* Posição absoluta para o ícone */
+            left: 15px; /* Distância da esquerda */
+            top: 50%; /* Centralizando verticalmente */
+            transform: translateY(-50%); /* Ajustando a posição vertical do ícone */
+            color: #888; /* Cor do ícone */
+            font-size: 18px; /* Tamanho do ícone */
         }
-		.response-container p {
-			font-size: 22px;
-		}
-		/* Estilização das respostas */
+
+        /* Estilização das respostas */
         .resposta-container {
             background-color: #fff;
             margin: 20px auto;
-
+            padding: 15px 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            width: 80%;
             max-width: 800px;
         }
-        .share-menu {
+        .top-header {
             display: flex;
-            justify-content: end;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 10px;
             margin-bottom: 10px;
         }
-        .share-menu i {
-            font-size: 20px;
-            padding: 10px;
-            background-color: #0d6efd;
-            color: white;
-            border-radius: 50%;
-            margin-left: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .share-menu i:hover {
-            background-color: #084298;
-        }
-        .separator {
-            border-bottom: 1px solid #dee2e6;
-            margin-bottom: 15px;
-        }
-        .botao-pdf {
-            padding: 4px 8px; /* Reduzir o tamanho do botão */
-            margin-top: ;
-            font-size:12px;
+        .botao-pdf, .botao-copiar {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 6px 10px;
             border-radius: 20px;
+            cursor: pointer;
+            margin-left: 5px;
+            font-site:9px
+        }
+        .botao-pdf:hover, .botao-copiar:hover {
+            background-color: #0056b3;
+        }
+        /* Ícones de compartilhamento */
+        .social-icons {
+            display: flex;
+            gap: 10px;
+        }
+        .social-icons a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 24px;
         }
         .footer {
             text-align: center;
@@ -127,140 +141,191 @@
         .footer a:hover {
             color: #0056b3;
         }
+        .resultPesquisa {
+            color: #555;
+        }
+        .paragrafoResposta {
+            font-size: 18px;
+            line-height: 1.3em;
+            color: #333;
+        }
+
+        .search-container {
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            margin: 15px auto;
+            position: fixed;
+            top: 0;
+            padding: 40px 0 20px 0;
+            background-color: #fff;
+        }
+
+        .form-control {
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+        .btn-search {
+            border-radius: 50px;
+            padding: 10px 20px;
+        }
+        .response-container {
+            width: 80%;
+            max-width: 800px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+		.response-container p {
+			font-size: 22px;
+		}
+
+
     </style>
     <script src="https://cdn.jsdelivr.net/npm/typeit@8.0.7/dist/typeit.min.js"></script>
 </head>
 <body>
 
-    <div class="search-container" >
-        <div class="header">
-            <div class="container">
-                <img th:src="@{/images/logo-caceai.jpg}" alt="Logo" class="logo">
-                <h1>Seja Inteligente.</h1>
-                <form id="consulta-form" class="mt-4">
-                    <div class="input-group mb-3">
-                        <input  type="text" name="consulta" id="consulta" class="form-control" placeholder="Digite sua pesquisa..." aria-label="Digite sua pesquisa" aria-describedby="button-search">
-                        <button onclick="exibirResposta()" class="btn btn-primary btn-search" type="button" id="button-search">Pesquisar</button>
-                    </div>
-                </form>
-            </div>
+<div class="search-container">
+    <div class="header">
+        <div class="container">
+            <img th:src="@{/images/logo-caceai.jpg}" alt="Logo" class="logo">
+            <h1>Seja Inteligente.</h1>
+            <form id="consulta-form" class="mt-4">
+                <div class="input-group mb-3">
+                    <input  type="text" name="consulta" id="consulta" class="form-control" placeholder="Digite sua pesquisa..." aria-label="Digite sua pesquisa" aria-describedby="button-search">
+                    <button onclick="exibirResposta()" class="btn btn-primary btn-search" type="button" id="button-search">Pesquisar</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
-    <div id="respostas-container"></div>
+<!-- Container para exibir as respostas -->
+<div id="respostas-container"></div>
 
-    <div class="footer">
-        <p>Desenvolvido por: <a href="https://www.publiky.com" target="_blank">publiky.com</a></p>
-    </div>
+<div class="footer">
+    <p>Desenvolvido por: <a href="https://www.publiky.com" target="_blank">publiky.com</a></p>
+</div>
 
-    <script>
-        // Função para gerar PDF com jsPDF
-        function gerarPDF(event) {
-            const resultado = event.target.closest('.resposta-container').querySelector('.paragrafoResposta').textContent;
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
+<script>
+    // Função para gerar PDF com jsPDF
+    function gerarPDF(event) {
+        const resultado = event.target.closest('.resposta-container').querySelector('.paragrafoResposta').textContent;
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
 
-            const margin = 20;
-            const pageHeight = doc.internal.pageSize.height;
-            const pageWidth = doc.internal.pageSize.width;
+        const margin = 20;
+        const pageHeight = doc.internal.pageSize.height;
+        const pageWidth = doc.internal.pageSize.width;
 
-            doc.setFontSize(16);
-            doc.setFont("helvetica", "normal");
-            doc.text('Resultado da Pesquisa', margin, margin);
+        doc.setFontSize(16);
+        doc.setFont("helvetica", "normal");
+        doc.text('Resultado da Pesquisa', margin, margin);
 
-            doc.setLineWidth(0.5);
-            doc.line(margin, margin + 5, pageWidth - margin, margin + 5);
+        doc.setLineWidth(0.5);
+        doc.line(margin, margin + 5, pageWidth - margin, margin + 5);
 
-            doc.setFontSize(12);
-            doc.text(resultado, margin, margin + 20, { maxWidth: pageWidth - 2 * margin });
+        doc.setFontSize(12);
+        doc.text(resultado, margin, margin + 20, { maxWidth: pageWidth - 2 * margin });
 
-            const footer = 'www.caceai.com';
-            doc.text(footer, margin, pageHeight - margin);
+        const footer = 'www.caceai.com';
+        doc.text(footer, margin, pageHeight - margin);
 
-            doc.save('resultado_pesquisa.pdf');
-        }
+        doc.save('resultado_pesquisa.pdf');
+    }
 
-        // Função para exibir a resposta na tela
-        function exibirResposta(resposta) {
-            const novaResposta = document.createElement("div");
-            novaResposta.classList.add("resposta-container", "response-container");
-            novaResposta.innerHTML = `
-
-                <span class="resultPesquisa">Resultado:</span>
-                <div class="top-header share-menu">
-                    <i class="fab fa-facebook-square"></i>
-                    <i class="fab fa-twitter-square"></i>
-                    <i class="fab fa-linkedin"></i>
-                    <i class="fas fa-envelope"></i>
-                    <button class="botao-pdf btn btn-primary" onclick="gerarPDF(event)">Gerar PDF</button>
-                </div>
-                <div class="separator"></div>
-                <p class="paragrafoResposta">${resposta}</p>
-
-
-            `;
-
-            document.getElementById("respostas-container").prepend(novaResposta);
-        }
-
-        // Manipulação do envio do formulário
-        document.getElementById("consulta-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-            const consulta = document.getElementById("consulta").value;
-
-            fetch("/", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                    "X-Requested-With": "XMLHttpRequest"
-                },
-                body: new URLSearchParams({ consulta })
-            })
-            .then(response => {
-                if (!response.ok) throw new Error("Erro ao processar a solicitação");
-                return response.text();
-            })
-            .then(data => {
-                if (data && data.trim()) {
-                    exibirResposta(data);
-                } else {
-                    exibirResposta("Nenhuma resposta encontrada para a pesquisa.");
-                }
-            })
-            .catch(error => {
-                console.error("Erro:", error);
-                exibirResposta("Ocorreu um erro ao processar a solicitação.");
-            });
+    // Função para copiar o conteúdo
+    function copiarResposta(event) {
+        const resultado = event.target.closest('.resposta-container').querySelector('.paragrafoResposta').textContent;
+        navigator.clipboard.writeText(resultado).then(() => {
+            alert("Resposta copiada para a área de transferência!");
+        }).catch(err => {
+            console.error("Erro ao copiar:", err);
         });
+    }
 
-        function compartilhar(plataforma, event) {
-            event.preventDefault();
-            const mensagem = "Confira essa pesquisa no CaceAi!";
-            const url = window.location.href;
-            let shareUrl = '';
+    // Função para exibir a resposta na tela
+    function exibirResposta(resposta) {
+        const novaResposta = document.createElement("div");
+        novaResposta.classList.add("resposta-container", "response-container");
+        novaResposta.innerHTML = `
+            <div class="top-header">
+                <span class="resultPesquisa">Resultado:</span>
+                <div class="social-icons">
+                    <a href="#" onclick="compartilhar('whatsapp', event)"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" onclick="compartilhar('instagram', event)"><i class="fab fa-instagram"></i></a>
+                    <a href="#" onclick="compartilhar('facebook', event)"><i class="fab fa-facebook"></i></a>
+                    <a href="#" onclick="compartilhar('x', event)"><i class="fab fa-x"></i></a>
+                    <button class="botao-pdf btn btn-primary" onclick="gerarPDF(event)">Gerar PDF</button>
+                    <button class="botao-copiar btn btn-primary" onclick="copiarResposta(event)">Copiar</button>
+                </div>
+            </div>
+            <p class="paragrafoResposta">${resposta}</p>
+        `;
 
-            switch (plataforma) {
-                case 'whatsapp':
-                    shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(mensagem + ' ' + url)}`;
-                    break;
-                case 'instagram':
-                    shareUrl = `https://www.instagram.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-                    break;
-                case 'facebook':
-                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-                    break;
-                case 'x':
-                    shareUrl = `https://twitter.com/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(mensagem)}`;
-                    break;
-                default:
-                    return;
+        document.getElementById("respostas-container").prepend(novaResposta);
+    }
+
+    // Manipulação do envio do formulário
+    document.getElementById("consulta-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const consulta = document.getElementById("consulta").value;
+
+        fetch("/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-Requested-With": "XMLHttpRequest"
+            },
+            body: new URLSearchParams({ consulta })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Erro ao processar a solicitação");
+            return response.text();
+        })
+        .then(data => {
+            if (data && data.trim()) {
+                exibirResposta(data);
+            } else {
+                exibirResposta("Nenhuma resposta encontrada para a pesquisa.");
             }
+        })
+        .catch(error => {
+            console.error("Erro:", error);
+            exibirResposta("Ocorreu um erro ao processar a solicitação.");
+        });
+    });
 
-            window.open(shareUrl, '_blank');
+    function compartilhar(plataforma, event) {
+        event.preventDefault();
+        const mensagem = "Confira essa pesquisa no CaceAi!";
+        const url = window.location.href;
+        let shareUrl = '';
+
+        switch (plataforma) {
+            case 'whatsapp':
+                shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(mensagem + ' ' + url)}`;
+                break;
+            case 'instagram':
+                shareUrl = `https://www.instagram.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                break;
+            case 'facebook':
+                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                break;
+            case 'x':
+                shareUrl = `https://twitter.com/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(mensagem)}`;
+                break;
+            default:
+                return;
         }
-    </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+        window.open(shareUrl, '_blank');
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 </body>
 </html>
