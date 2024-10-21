@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CaceAi</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+    <style>
+        /* Estilização do corpo da página */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding-top: 380px; /* Espaço para o header fixo */
+        }
+        /* Header fixo */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            z-index: 1000;
+            text-align: center;
+            padding: 60px 0 60px 0;
+        }
+        .header .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .logo {
+            max-width: 150px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 15px;
+            color: #888;
+            margin: 20px 0 25 0;
+            font-weight: 400;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            width: 100%; /* Ajuste para 100% para responsividade */
+            padding: 18px;
+            border-radius: 25px;
+            border: 1px solid #ccc;
+            outline: none;
+            transition: border-color 0.3s;
+            font-weight: 500;
+            color: #888;
+            font-size: 17px;
+            white-space: pre-wrap; /* Permite quebras de linha */
+            word-wrap: break-word; /* Quebra palavras longas */
+        }
+        input[type="text"]:focus {
+            border-color: #007bff;
+        }
+
+        /* Estilizando o ícone */
+        .search-icon {
+            position: absolute; /* Posição absoluta para o ícone */
+            left: 15px; /* Distância da esquerda */
+            top: 50%; /* Centralizando verticalmente */
+            transform: translateY(-50%); /* Ajustando a posição vertical do ícone */
+            color: #888; /* Cor do ícone */
+            font-size: 18px; /* Tamanho do ícone */
+        }
+
+        /* Estilização das respostas */
+        .resposta-container {
+            background-color: #fff;
+            margin: 20px auto;
+            padding: 15px 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            width: 80%;
+            max-width: 800px;
+        }
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .botao-pdf {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        .botao-pdf:hover {
+            background-color: #0056b3;
+        }
+        /* Ícones de compartilhamento */
+        .social-icons {
+            display: flex;
+            gap: 10px;
+        }
+        .social-icons a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 24px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            position: fixed;
+            color: #888;
+            bottom: 0;
+            width: 100%;
+            padding: 15px 0;
+        }
+        .footer a {
+            text-decoration: none;
+            color: #888;
+        }
+        .footer a:hover {
+            color: #0056b3;
+        }
+        .resultPesquisa {
+            color: #555;
+        }
+        .paragrafoResposta {
+            font-size: 18px;
+            line-height: 1.3em;
+            color: #333;
+        }
+
+        /* Estilos Responsivos */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 320px; /* Ajuste o espaçamento para o header fixo */
+            }
+            .header {
+                padding: 30px 0;
+            }
+            .resposta-container {
+                width: 95%; /* Ajustar largura das respostas em telas menores */
+            }
+            h1 {
+                font-size: 13px; /* Ajuste o tamanho do texto em dispositivos menores */
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding-top: 300px; /* Ajuste o espaçamento para o header fixo */
+            }
+            .header {
+                padding: 20px 0;
+            }
+            h1 {
+                font-size: 25px; /* Ajustar tamanho da fonte em telas menores */
+            }
+            input[type="text"], textarea {
+            max-width: 350px;
+                font-size: 32px; /* Ajustar tamanho da fonte do input */
+                padding: 20px; /* Ajustar padding do input em telas pequenas */
+            }
+            .resposta-container {
+                max-width: 350px;
+                padding: 10px;
+            }
+            .top-header {
+                flex-direction: column; /* Organizar em coluna em telas menores */
+                text-align: center;
+            }
+            .botao-pdf {
+                padding: 6px 10px; /* Reduzir o tamanho do botão */
+                margin-top: 5px;
+            }
+            .logo {
+            width: 250px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/typeit@8.0.7/dist/typeit.min.js"></script>
+</head>
+<body>
+<div class="header">
+    <div class="container">
+        <img th:src="@{/images/logo-caceai.jpg}" alt="Logo" class="logo">
+        <h1>Seja Inteligente.</h1>
+        <form id="consulta-form">
+            <input type="text" name="consulta" id="consulta" placeholder="Digite sua consulta" required>
+        </form>
+    </div>
+</div>
+
+<!-- Container para exibir as respostas -->
+<div id="respostas-container"></div>
+
+<div class="footer">
+    <p>Desenvolvido por: <a href="https://www.publiky.com" target="_blank">publiky.com</a></p>
+</div>
+
+<script>
+    // Função para gerar PDF com jsPDF
+    function gerarPDF(event) {
+        const resultado = event.target.closest('.resposta-container').querySelector('.paragrafoResposta').textContent;
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        const margin = 20;
+        const pageHeight = doc.internal.pageSize.height;
+        const pageWidth = doc.internal.pageSize.width;
+
+        doc.setFontSize(16);
+        doc.setFont("helvetica", "normal");
+        doc.text('Resultado da Pesquisa', margin, margin);
+
+        doc.setLineWidth(0.5);
+        doc.line(margin, margin + 5, pageWidth - margin, margin + 5);
+
+        doc.setFontSize(12);
+        doc.text(resultado, margin, margin + 20, { maxWidth: pageWidth - 2 * margin });
+
+        const footer = 'www.caceai.com';
+        doc.text(footer, margin, pageHeight - margin);
+
+        doc.save('resultado_pesquisa.pdf');
+    }
+
+    // Função para exibir a resposta na tela
+    function exibirResposta(resposta) {
+        const novaResposta = document.createElement("div");
+        novaResposta.classList.add("resposta-container");
+        novaResposta.innerHTML = `
+            <div class="top-header">
+                <span class="resultPesquisa">Resultado:</span>
+                <div class="social-icons">
+                    <a href="#" onclick="compartilhar('whatsapp', event)"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" onclick="compartilhar('instagram', event)"><i class="fab fa-instagram"></i></a>
+                    <a href="#" onclick="compartilhar('facebook', event)"><i class="fab fa-facebook"></i></a>
+                    <a href="#" onclick="compartilhar('x', event)"><i class="fab fa-x"></i></a>
+                    <button class="botao-pdf" onclick="gerarPDF(event)">Gerar PDF</button>
+                </div>
+            </div>
+            <p class="paragrafoResposta">${resposta}</p>
+        `;
+
+        document.getElementById("respostas-container").prepend(novaResposta);
+    }
+
+    // Manipulação do envio do formulário
+    document.getElementById("consulta-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const consulta = document.getElementById("consulta").value;
+
+        fetch("/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-Requested-With": "XMLHttpRequest"
+            },
+            body: new URLSearchParams({ consulta })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Erro ao processar a solicitação");
+            return response.text();
+        })
+        .then(data => {
+            if (data && data.trim()) {
+                exibirResposta(data);
+            } else {
+                exibirResposta("Nenhuma resposta encontrada para a pesquisa.");
+            }
+        })
+        .catch(error => {
+            console.error("Erro:", error);
+            exibirResposta("Ocorreu um erro ao processar a solicitação.");
+        });
+    });
+
+    function compartilhar(plataforma, event) {
+        event.preventDefault();
+        const mensagem = "Confira essa pesquisa no CaceAi!";
+        const url = window.location.href;
+        let shareUrl = '';
+
+        switch (plataforma) {
+            case 'whatsapp':
+                shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(mensagem + ' ' + url)}`;
+                break;
+            case 'instagram':
+                shareUrl = `https://www.instagram.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                break;
+            case 'facebook':
+                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                break;
+            case 'x':
+                shareUrl = `https://twitter.com/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(mensagem)}`;
+                break;
+            default:
+                return;
+        }
+
+        window.open(shareUrl, '_blank');
+    }
+</script>
+</body>
+</html>
