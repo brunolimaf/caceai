@@ -170,8 +170,8 @@
         }
 
         .paragrafo-pergunta {
-            font-size: 18px;
-            line-height: 1.3em;
+            font-size: 13px;
+            line-height: 1em;
             color: #555;
             font-weight:600;
         }
@@ -181,8 +181,7 @@
             max-width: 800px;
             background-color: #ebebeb;
             border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            padding: 10px;
 
         }
 
@@ -273,7 +272,10 @@
 
 
 <!-- Container para exibir as respostas -->
-<div id="respostas-container"></div>
+<div id="respostas-container">
+
+
+</div>
 
 <div class="footer">
     <p>Desenvolvido por: <a href="https://www.publiky.com" target="_blank">publiky.com</a></p>
@@ -285,14 +287,8 @@
         const novaPergunta = document.createElement("div");
         novaPergunta.classList.add("response-container-pergunta", "resposta-container");
         novaPergunta.innerHTML = `
-            <div class="top-header">
-                <span class="resultPesquisa">Você:</span>
-            </div>
-            <p class="paragrafo-pergunta">${pergunta}</p>
-        `;
 
-        // Adiciona a pergunta ao início do container de respostas
-        document.getElementById("respostas-container").prepend(novaPergunta);
+        `;
     }
 
     // Função para gerar PDF com jsPDF
@@ -351,12 +347,20 @@
                     <a href="#" onclick="copiarResposta(event)"><i class="fas fa-copy"></i></a>
                 </div>
             </div>
+
+            <div class="top-header">
+                <span class="resultPesquisa" style="padding: 0 80px 0 0">Você:</span>
+                    <div id="respostas-container" class="response-container-pergunta" style="padding: 10px 15px 0 15px">
+                        <p class="paragrafo-pergunta">${pergunta}</p>
+                    </div>
+            </div>
+
             <p class="paragrafoResposta">${resposta}</p>
         `;
 
         // Adiciona a resposta ao início do container de respostas
         document.getElementById("respostas-container").prepend(novaResposta);
-        novaResposta.style.display = "block";
+        novaResposta.style.display = "";
     }
 
     // Função para enviar a consulta e exibir a resposta
