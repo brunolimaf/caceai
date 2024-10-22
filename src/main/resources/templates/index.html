@@ -7,18 +7,24 @@
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@400;700&family=Noto+Sans:wght@400;700&family=Open+Sans:wght@400;700&family=Oswald:wght@400;700&family=Poppins:wght@400;700&family=Quicksand:wght@400;700&family=Raleway:wght@400;700&family=Roboto:wght@400;700&family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <style>
         /* Estilização do corpo da página */
         body {
-            font-family: Arial, sans-serif;
+            font-family:'Raleway';
             display: flex;
             background-color: #fff;
             flex-direction: column;
             margin: 0;
             padding: 0;
             align-items: center; /* Centraliza o conteúdo na página */
+
+        }
+        body a{
+        text-decoration: none;
         }
 
         /* Header centralizado */
@@ -45,6 +51,9 @@
             padding: 30px 0 0px 0;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
         }
+        .input-group{
+            margin:70px 0 0 0;
+        }
 
         .search-container img {
             width: 150px;
@@ -60,9 +69,21 @@
 
         h1 {
             font-size: 16px;
-            color: #777;
-            margin: 20px 0 25 0;
+            color: #999;
+            margin: 10px 0 40px 0;
             font-weight: 400;
+            letter-spacing: 0.1rem;
+            text-align:center;
+            margin-bottom:70px;
+        }
+        h2 {
+            font-size:76px;
+            color:#333;
+            text-align:center;
+            font-weight:600;
+            font-family:'Raleway';
+            margin: 40px 0 10px 0;
+
         }
 
         form {
@@ -71,7 +92,7 @@
 
         .btn-search {
             border-radius: 50px;
-            padding: 10px 20px;
+            padding: 10px 18px;
         }
 
         /* Estilização das respostas */
@@ -176,6 +197,23 @@
             100% { transform: rotate(360deg); }
         }
 
+        #consulta{
+            border-radius: 50px 0 0 50px;
+            font-weight:600;
+            padding: 15px 15px;
+            color:#777;
+        }
+        #consulta::placeholder {
+        font-weight:400;
+        font-size:16px;
+        color: rgba(0, 0, 0, 0.2); /* Cor preta com 50% de transparência */
+
+        }
+        .btn-primary {
+            background-color:#333;
+            font-weight:600;
+
+        }
 
     </style>
 
@@ -187,12 +225,18 @@
     <div class="header" style="background-color:#; width:95%; margin:0 auto;">
         <div class="container" style="background-color:; ">
             <!--<img th:src="@{/images/logo-caceai.jpg}" alt="Logo" class="logo">-->
-            <h2>CaceAi</h2>
+            <a href="https://caceai.onrender.com/"><h2 style="">CaceAi</h2></a>
+            <!--<h2 style="font-size:56px; text-align:center; font-family: 'Poppins', 'Roboto', 'Montserrat', 'Lato', 'Oswald', 'Open Sans', 'Raleway', 'Noto Sans', 'Quicksand', 'Ubuntu', sans-serif;">CaceAi</h2>-->
             <h1>Seja Inteligente.</h1>
             <form id="consulta-form" class="mt-4">
                 <div class="input-group mb-3">
-                    <input type="text" name="consulta" id="consulta" class="form-control" placeholder="Digite sua pesquisa..." aria-label="Digite sua pesquisa" aria-describedby="button-search">
-                    <button class="btn btn-primary btn-search" type="button" id="button-search">Ir</button>
+                    <input type="text" name="consulta" id="consulta" class="form-control"
+                           placeholder="Digite sua pesquisa..."
+                           aria-label="Digite sua pesquisa"
+                           aria-describedby="button-search"
+                           style="">
+
+                    <button class="btn btn-primary btn-search" type="button" id="button-search">Cace</button>
                 </div>
             </form>
         </div>
@@ -312,6 +356,13 @@
         enviarConsulta();
     });
 </script>
+
+<script>
+    window.addEventListener("load", function() {
+        document.getElementById("consulta").focus();
+    });
+</script>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
