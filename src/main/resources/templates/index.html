@@ -198,7 +198,7 @@
         }
 
         #consulta{
-            border-radius: 50px 0 0 50px;
+            border-radius: 100px 0 0 50px;
             font-weight:600;
             padding: 15px 15px;
             color:#777;
@@ -206,7 +206,7 @@
         #consulta::placeholder {
         font-weight:400;
         font-size:16px;
-        color: rgba(0, 0, 0, 0.2); /* Cor preta com 50% de transparência */
+        color: rgba(0, 0, 0, 0.3); /* Cor preta com 50% de transparência */
 
         }
         .btn-primary {
@@ -230,15 +230,15 @@
             <h1>Seja Inteligente.</h1>
             <form id="consulta-form" class="mt-4">
                 <div class="input-group mb-3">
-                    <input type="text" name="consulta" id="consulta" class="form-control"
-                           placeholder="Digite sua pesquisa..."
-                           aria-label="Digite sua pesquisa"
-                           aria-describedby="button-search"
-                           style="">
-
+        <textarea name="consulta" id="consulta" class="form-control"
+                  placeholder="Digite sua pesquisa..."
+                  aria-label="Digite sua pesquisa"
+                  aria-describedby="button-search"
+                  style="border-radius: 8px;"></textarea>
                     <button class="btn btn-primary btn-search" type="button" id="button-search">Cace</button>
                 </div>
             </form>
+
         </div>
     </div>
 </div>
