@@ -117,13 +117,15 @@
         }
 
         .botao-pdf, .botao-copiar {
-            background-color: #007bff;
+            background-color: #777;
             color: #fff;
             border: none;
-            padding: 5px;
+            padding: 5px 8px;
             border-radius: 20px;
             cursor: pointer;
             margin-left: 5px;
+            font-size:11px;
+            font-weight: 500;
         }
 
         .botao-pdf:hover, .botao-copiar:hover {
@@ -137,7 +139,7 @@
         }
 
         .social-icons a {
-            color: #007bff;
+            color: #333;
             text-decoration: none;
             font-size: 24px;
         }
@@ -186,10 +188,10 @@
             border: 6px solid #f3f3f3;
             border-top: 6px solid #333;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             animation: spin 1s linear infinite;
-            margin: 10px auto;
+            margin: 50px auto;
         }
 
         @keyframes spin {
@@ -215,6 +217,11 @@
 
         }
 
+        .resultPesquisa {
+            font-weight:600;
+            color:#777;
+        }
+
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/typeit@8.0.7/dist/typeit.min.js"></script>
@@ -234,6 +241,7 @@
                   placeholder="Digite sua pesquisa..."
                   aria-label="Digite sua pesquisa"
                   aria-describedby="button-search"
+                  rows="1"
                   style="border-radius: 6px 0 0 6px;"></textarea>
                     <button class="btn btn-primary btn-search" type="button" id="button-search">Cace</button>
                 </div>
@@ -296,12 +304,12 @@
         novaResposta.classList.add("resposta-container", "response-container");
         novaResposta.innerHTML = `
             <div class="top-header">
-                <span class="resultPesquisa">Resultado:</span>
+                <span class="resultPesquisa">Compartilhe:</span>
                 <div class="social-icons">
                     <a href="#" onclick="compartilhar('whatsapp', event)"><i class="fab fa-whatsapp"></i></a>
                     <a href="#" onclick="compartilhar('instagram', event)"><i class="fab fa-instagram"></i></a>
                     <a href="#" onclick="compartilhar('facebook', event)"><i class="fab fa-facebook"></i></a>
-                    <a href="#" onclick="compartilhar('x', event)"><i class="fab fa-x"></i></a>
+                    <a href="#" onclick="compartilhar('x', event)"><i class="fas fa-x"></i></a>
                     <button class="botao-pdf btn btn-primary" onclick="gerarPDF(event)">Gerar PDF</button>
                     <button class="botao-copiar btn btn-primary" onclick="copiarResposta(event)">Copiar</button>
                 </div>
