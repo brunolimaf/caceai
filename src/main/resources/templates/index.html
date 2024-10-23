@@ -346,6 +346,7 @@
                     <span>|</span>
                     <a href="#" onclick="gerarPDF(event)"><i class="fas fa-file-pdf"></i></a>
                     <a href="#" onclick="copiarResposta(event)"><i class="fas fa-copy"></i></a>
+                    <a href="#" onclick="converterTextoEmAudio(event)" download><i class="fas fa-volume-up"></i></a>
                 </div>
             </div>
 
@@ -421,13 +422,50 @@
     });
 </script>
 
-
-
 <script>
     window.addEventListener("load", function() {
         document.getElementById("consulta").focus();
     });
 </script>
+
+<script>
+    function converterTextoEmAudio(event) {
+    event.preventDefault();
+
+    // Seleciona o texto da classe 'paragrafoResposta'
+    const texto = event.target.closest('.resposta-container').querySelector('.paragrafoResposta').textContent;
+
+    // Configura a síntese de fala
+    const utterance = new SpeechSynthesisUtterance(texto);
+    utterance.lang = 'pt-BR'; // Defina o idioma, aqui para português
+
+    // Use SpeechSynthesis para converter texto em áudio
+    const synth = window.speechSynthesis;
+
+    // Gera o áudio usando o SpeechSynthesis
+    synth.speak(utterance);
+
+    // Manipulador para quando o áudio terminar de ser sintetizado
+    utterance.onend = function () {
+        const audioBlob = new Blob([utterance], { type: 'audio/wav' });
+
+        // Cria uma URL para o áudio
+        const url = URL.createObjectURL(audioBlob);
+
+        // Cria um elemento <a> para fazer o download do arquivo
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'texto_para_audio.wav';
+        a.click();
+
+        // Libera a URL após o download
+        URL.revokeObjectURL(url);
+    };
+}
+
+</script>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
